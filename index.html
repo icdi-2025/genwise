@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GENWISE - Senior Healthcare & Lifestyle App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sky-blue': '#47b5eb',
+                        'accent-yellow': '#FFD700'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .phone-container {
+            width: 375px;
+            height: 812px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        .screen {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+        }
+        .screen.active {
+            display: block;
+        }
+   .tab-bar{
+  position: absolute;     /* เดิมเป็น fixed */
+  bottom: 0;
+  left: 0;                /* ไม่ต้องใช้ translate แล้ว */
+  width: 100%;
+  background: #47b5eb;    /* sky-blue */
+  padding: 12px 0 8px;
+  border-radius: 24px 24px 0 0;
+  border-top: none;
+  z-index: 30;            /* ซ้อนเหนือเนื้อหา */
+  box-shadow: 0 -4px 16px rgba(0,0,0,.08);
+}
+
+.tab-item {
+  color: black; /* ตัวอักษรสีดำ */
+  flex: 1;
+  padding: 4px 0;
+}
+
+.icon-wrapper {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.tab-item.active .icon-wrapper {
+  background: white;      /* วงกลมขาว */
+  color: #87CEEB;         /* ไอคอนฟ้า */
+}
+
+.tab-item.active span.text-xs {
+  font-weight: 600;
+}
+
+    </style>
+</head>
+<body class="bg-gray-100 py-8">
+    <div class="phone-container">
+      <!-- Welcome Screen -->
+<div id="welcome" class="screen active bg-white">
+  <div class="flex flex-col h-full">
+
+    <!-- โลโก้ -->
+    <div class="pt-12 px-8 flex justify-center">
+      <!-- รูปโลโก้ -->
+      <img src="genwise-logo.png" alt="GENWISE" class="object-contain" />
+    </div>
+
+    <!-- เนื้อหากลาง -->
+    <div class="flex-1 px-8 flex flex-col justify-center">
+      <h1 class="text-2xl font-extrabold text-gray-900 text-center tracking-tight">
+        Welcome! to GENWISE
+      </h1>
+      <p class="mt-4 text-center text-gray-600 leading-relaxed text-sm max-w-[300px] mx-auto">
+        Your trusted companion for senior health and caregiving, providing easy access
+        to health information and services.
+      </p>
+
+      <div class="mt-8 space-y-3 max-w-[320px] mx-auto w-full">
+        <button
+          onclick="showScreen('signup')"
+          class="w-full bg-sky-blue hover:brightness-95 text-white font-semibold py-3.5 rounded-2xl transition"
+        >
+          Sign Up
+        </button>
+        <button
+          onclick="showScreen('login')"
+          class="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold py-3.5 rounded-2xl transition"
+        >
+          Login
+        </button>
+      </div>
+    </div>
+
+    <!-- ข้อความ Terms/Privacy -->
+    <div class="pb-8 px-6">
+      <p class="text-[11px] text-center text-gray-400 leading-snug">
+        By continuing, you agree to our
+        <a href="#" class="underline">Terms of Service</a>
+        and
+        <a href="#" class="underline">Privacy Policy</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+        <!-- Login Screen -->
+<div id="login" class="screen bg-white">
+  <div class="flex flex-col h-full">
+    <!-- แถบหัว -->
+    <div class="px-5 pt-6 pb-2 flex items-center">
+      <button onclick="showScreen('welcome')" class="text-gray-700 text-3xl leading-none">
+        ←
+      </button>
+      <h2 class="mx-auto text-lg font-extrabold text-gray-900">Sign In</h2>
+      <span class="w-5"></span>
+    </div>
+
+    <!-- ฟอร์ม -->
+    <div class="px-5 mt-4">
+      <div class="space-y-4">
+        <div>
+          <input
+            type="email"
+            placeholder="Email  or Username"
+            class="w-full px-4 py-3.5 text-[15px] placeholder-gray-400 bg-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-sky-blue"
+            autocomplete="username"
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            placeholder="Password"
+            class="w-full px-4 py-3.5 text-[15px] placeholder-gray-400 bg-gray-100 rounded-2xl outline-none focus:ring-2 focus:ring-sky-blue"
+            autocomplete="current-password"
+          />
+        </div>
+
+        <div class="pt-1">
+          <a href="#" class="block text-center text-sm text-gray-500 hover:text-gray-700">
+            Forgot Password?
+          </a>
+        </div>
+
+        <button
+          onclick="showScreen('home')"
+          class="w-full mt-2 bg-sky-blue hover:brightness-95 text-black font-extrabold py-3.5 rounded-full transition"
+        >
+          Login...
+        </button>
+      </div>
+    </div>
+
+    <!-- ดันเนื้อหาให้ปุ่ม Sign Up ไปชิดล่าง -->
+    <div class="flex-1"></div>
+
+    <!-- ลิงก์ Sign Up ล่างสุด -->
+    <div class="pb-8 px-6">
+      <p class="text-xs text-center text-gray-500">
+        Don’t have an account?
+        <button onclick="showScreen('signup')" class="text-sky-blue font-medium underline-offset-2 hover:underline">
+          Sign Up
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Sign Up Screen -->
+<div id="signup" class="screen bg-white">
+  <div class="flex flex-col h-full">
+
+    <!-- Top bar -->
+    <div class="pt-6 px-4 flex justify-end">
+      <button title="Help" class="w-8 h-8 rounded-full border border-gray-300 text-gray-700 flex items-center justify-center">
+        ?
+      </button>
+    </div>
+
+    <!-- Title -->
+    <div class="px-6">
+      <h2 class="text-2xl font-extrabold text-gray-900">Create your account</h2>
+    </div>
+
+    <!-- Form -->
+    <div class="px-6 mt-5 space-y-5">
+      <!-- Name -->
+      <div>
+        <label class="block text-[15px] font-semibold text-gray-900 mb-2">Name</label>
+        <input
+          type="text"
+          placeholder="Enter your name"
+          class="w-full bg-gray-100/80 border-0 rounded-2xl px-4 py-3.5 text-[15px] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-blue"
+        />
+             </div>
+
+      <!-- Email -->
+      <div>
+        <label class="block text-[15px] font-semibold text-gray-900 mb-2">Email</label>
+        <input
+          type="email"
+          placeholder="Enter your email"
+          class="w-full bg-gray-100/80 border-0 rounded-2xl px-4 py-3.5 text-[15px] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-blue"
+        />
+
+      </div>
+
+      <!-- Password -->
+      <div>
+        <label class="block text-[15px] font-semibold text-gray-900 mb-2">Password</label>
+        <input
+          type="password"
+          placeholder="Enter your password"
+          class="w-full bg-gray-100/80 border-0 rounded-2xl px-4 py-3.5 text-[15px] placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sky-blue"
+        />
+
+      </div>
+
+      <!-- CTA -->
+      <button
+        onclick="showScreen('verification')"
+        class="w-full bg-sky-blue hover:brightness-95 text-white font-semibold py-3.5 rounded-full transition"
+      >
+        Sign Up
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Verification Screen -->
+<div id="verification" class="screen bg-white">
+  <div class="flex flex-col h-full">
+
+    <!-- Header -->
+    <div class="pt-6 px-4 relative">
+      <button onclick="showScreen('signup')" class="absolute left-4 top-6 text-gray-700 text-xl">
+        ←
+      </button>
+      <h2 class="text-center text-lg font-extrabold text-gray-900">Verification</h2>
+    </div>
+
+    <!-- Title & Text -->
+    <div class="px-6 mt-8 text-center">
+      <h3 class="text-xl font-bold text-gray-900 mb-3">Enter the 4-digit code</h3>
+      <p class="text-gray-600 text-sm">
+        We’ve sent a verification code to your device.<br/>
+        Please enter it below to continue.
+      </p>
+    </div>
+
+    <!-- Code Input -->
+    <div class="flex justify-center space-x-3 mt-8">
+      <input maxlength="1" class="w-12 h-12 text-center text-lg border-b-2 border-gray-300 focus:outline-none focus:border-sky-blue"/>
+      <input maxlength="1" class="w-12 h-12 text-center text-lg border-b-2 border-gray-300 focus:outline-none focus:border-sky-blue"/>
+      <input maxlength="1" class="w-12 h-12 text-center text-lg border-b-2 border-gray-300 focus:outline-none focus:border-sky-blue"/>
+      <input maxlength="1" class="w-12 h-12 text-center text-lg border-b-2 border-gray-300 focus:outline-none focus:border-sky-blue"/>
+    </div>
+
+    <!-- Resend -->
+    <div class="mt-4 text-center">
+      <button class="text-sm text-gray-500 hover:text-gray-700">Resend Code</button>
+    </div>
+
+    <!-- Verify Button -->
+    <div class="px-6 mt-auto pb-8">
+      <button onclick="showScreen('home')" class="w-full bg-sky-blue hover:brightness-95 text-white font-semibold py-3.5 rounded-full transition">
+        Verify
+      </button>
+    </div>
+  </div>
+</div>
+
+      <!-- Home Screen -->
+<div id="home" class="screen bg-white">
+  <div class="flex flex-col h-full pb-24">
+
+    <!-- Top bar -->
+    <div class="px-4 pt-4 flex items-center justify-between">
+      <button onclick="showScreen('profile')" class="w-12 h-12 rounded-full overflow-hidden border border-gray-200">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/028/144/389/small_2x/happy-asian-old-woman-isolated-free-photo.jpg" alt="avatar" class="w-full h-full object-cover">
+      </button >
+
+      <!-- โลโก้ -->
+      <img src="genwise-logo.png" alt="GENWISE" class="h-20 object-contain">
+
+      <!-- actions -->
+      <div class="flex items-center space-x-3">
+         <button onclick="showScreen('notifications')" class="w-9 h-9 rounded-full bg-yellow-300/70 flex items-center justify-center">
+          <!-- ระฆัง -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+        </button>
+        <button onclick="showScreen('settings')" class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center">
+          <!-- เมนู -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Title: Events -->
+    <div class="px-5 mt-4">
+      <div class="bg-yellow-300 text-gray-900 font-extrabold text-lg text-center py-3 rounded-2xl">
+        Events
+      </div>
+    </div>
+
+    <!-- Events list -->
+    <div class="px-5 mt-4 space-y-6">
+
+      <!-- Row 1: 2 การ์ด -->
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white">
+          <div class="rounded-2xl overflow-hidden mb-3">
+            <img src="https://www.chiangmaicraftsweek.com/wp-content/uploads/2024/11/1500-700px.webp"
+                 alt="crafts" class="w-full h-24 object-cover">
+          </div>
+          <h3 class="font-extrabold text-gray-900 text-[15px] leading-snug">
+            Experience the Magic of Handmade
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">
+            Join us for a day of fun activities and socializing.
+          </p>
+        </div>
+
+        <div class="bg-white">
+          <div class="rounded-2xl overflow-hidden mb-3">
+            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?q=80&w=800&auto=format&fit=crop"
+                 alt="as is" class="w-full h-24 object-cover">
+          </div>
+          <h3 class="font-extrabold text-gray-900 text-[15px] leading-snug">
+            as is, as us. made of us
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">
+            Join us for a day of fun activities and socializing.
+          </p>
+        </div>
+      </div>
+
+      <!-- Row 2: การ์ดแนวนอน -->
+      <div class="flex items-start">
+        <div class="flex-1 pr-3">
+          <h3 class="font-extrabold text-gray-900 text-[15px] leading-snug">
+            Staying Active in Retirement
+          </h3>
+          <p class="text-gray-500 text-sm mt-1">
+            Tips for maintaining physical and mental health.
+          </p>
+        </div>
+        <div class="w-28 h-20 rounded-2xl overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?q=80&w=800&auto=format&fit=crop"
+               alt="active" class="w-full h-full object-cover">
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+     <!-- Healthcare Screen -->
+<div id="healthcare" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Header -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Healthcare</h1>
+    </div>
+
+    <!-- CMU Health Center -->
+    <div class="px-6 mt-4 space-y-3">
+      <div>
+        <h3 class="font-extrabold text-gray-900">CMU Health Center</h3>
+        <p class="text-sm text-gray-600 mt-1">
+          Access the CMU Health Center website for appointments, health information, and services.
+        </p>
+      </div>
+      <button class="w-full bg-sky-blue text-white font-semibold py-3 rounded-xl">
+        Visit CMU Health Center
+      </button>
+    </div>
+
+    <!-- My Health Data -->
+    <div class="px-6 mt-5">
+      <h3 class="font-extrabold text-gray-900">My Health Data</h3>
+      <p class="text-sm text-gray-600 mt-1">
+        Connect your smartwatch to automatically track your health data. Compatible devices include Fitbit, Apple Watch, and Garmin.
+      </p>
+
+      <button class="w-full mt-3 bg-sky-blue/90 hover:brightness-95 text-white font-semibold py-3 rounded-xl">
+        Connect Smartwatch
+      </button>
+
+      <!-- 4 metric cards -->
+      <div class="grid grid-cols-2 gap-3 mt-4">
+        <div class="rounded-xl border border-yellow-300 bg-white p-3">
+          <div class="text-sm text-gray-500">Sleep</div>
+          <div class="font-extrabold text-gray-900 text-lg">7.5 hrs</div>
+        </div>
+        <div class="rounded-xl border border-yellow-300 bg-white p-3">
+          <div class="text-sm text-gray-500">Steps</div>
+          <div class="font-extrabold text-gray-900 text-lg">5,200</div>
+        </div>
+        <div class="rounded-xl border border-yellow-300 bg-white p-3">
+          <div class="text-sm text-gray-500">Heart Rate</div>
+          <div class="font-extrabold text-gray-900 text-lg">72 bpm</div>
+        </div>
+        <div class="rounded-xl border border-yellow-300 bg-white p-3">
+          <div class="text-sm text-gray-500">Body Measurements</div>
+          <div class="font-extrabold text-gray-900 text-lg">BMI: 24.5</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weight Tracking -->
+    <div class="px-6 mt-6">
+      <h3 class="font-extrabold text-gray-900">Weight Tracking</h3>
+      <div class="mt-1 text-sm text-gray-600">Weight Over Time</div>
+      <div class="text-2xl font-extrabold text-gray-900 mt-1">155 lbs</div>
+      <div class="text-xs text-gray-400">Last 30 Days</div>
+
+      <!-- simple red line chart (svg) -->
+      <div class="mt-3 rounded-xl bg-white border p-3">
+        <svg viewBox="0 0 300 90" class="w-full h-24">
+          <path d="M0,50 C30,20 60,70 90,45 120,20 150,60 180,40 210,20 240,80 270,50 290,35 300,60 300,60"
+                fill="none" stroke="#ef4444" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="flex justify-between text-[11px] text-gray-500 px-1">
+          <span>1W</span><span>2W</span><span>3W</span><span>4W</span>
+        </div>
+      </div>
+
+      <button class="w-full mt-3 bg-gray-100 text-gray-800 font-medium py-2.5 rounded-xl">
+        Add Weight Entry
+      </button>
+    </div>
+
+    <!-- Medical ID -->
+    <div class="px-6 mt-6">
+      <h3 class="font-extrabold text-gray-900">Medical ID</h3>
+      <div class="mt-3 space-y-3">
+        <input placeholder="Medical Conditions" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl">
+        <input placeholder="Allergies" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl">
+        <input placeholder="Medications" class="w-full px-4 py-2.5 text-sm border border-gray-300 rounded-xl">
+      </div>
+      <button class="w-full mt-3 bg-sky-blue text-white font-semibold py-3 rounded-xl">
+        Update Medical ID
+      </button>
+    </div>
+
+    <!-- Medication Reminders -->
+    <div class="px-6 mt-6 pb-6">
+      <h3 class="font-extrabold text-gray-900">Medication Reminders</h3>
+
+      <!-- item -->
+      <div class="flex items-center justify-between mt-3">
+        <div>
+          <div class="font-medium">Lisinopril</div>
+          <div class="text-xs text-gray-500">8:00 AM</div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer" checked>
+          <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-sky-blue
+                      after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                      after:bg-white after:h-5 after:w-5 after:rounded-full after:transition-all
+                      peer-checked:after:translate-x-full"></div>
+        </label>
+      </div>
+
+      <div class="flex items-center justify-between mt-3">
+        <div>
+          <div class="font-medium">Vitamin D</div>
+          <div class="text-xs text-gray-500">6:00 PM</div>
+        </div>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-sky-blue
+                      after:content-[''] after:absolute after:top-[2px] after:left-[2px]
+                      after:bg-white after:h-5 after:w-5 after:rounded-full after:transition-all
+                      peer-checked:after:translate-x-full"></div>
+        </label>
+      </div>
+
+      <button class="w-full mt-4 bg-sky-blue text-white font-semibold py-3 rounded-xl">
+        Set New Reminder
+      </button>
+    </div>
+
+    <!-- กันแท็บล่างทับ -->
+    <div class="h-[96px]"></div>
+  </div>
+</div>
+
+
+<!-- Services Screen -->
+<div id="services" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Header -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Services</h1>
+    </div>
+
+    <!-- Health & Wellness -->
+    <div class="px-6 mt-6">
+      <h3 class="font-extrabold text-gray-900 mb-3">Health &amp; Wellness</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <!-- card -->
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+       
+            <i class="fa fa-stethoscope"></i>
+         
+          <span class="font-semibold text-gray-800 leading-snug">Healthcare<br/>Providers</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+         
+            <i class="fa fa-home"></i>
+     
+          <span class="font-semibold text-gray-800 leading-snug">Home Care</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+          
+            <i class="fa fa-car"></i>
+    
+          <span class="font-semibold text-gray-800 leading-snug">Transportation</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+        
+            <i class="fa fa-money"></i>
+      
+          <span class="font-semibold text-gray-800 leading-snug">Financial<br/>Advice</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Wellness & Therapy -->
+    <div class="px-6 mt-8">
+      <h3 class="font-extrabold text-gray-900 mb-3">Wellness &amp; Therapy</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+          
+            <i class="fa fa-hand-paper-o"></i>
+      
+          <span class="font-semibold text-gray-800 leading-snug">Thai Massage</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+          
+            <i class="fa fa-hand-paper-o"></i>
+        
+          <span class="font-semibold text-gray-800 leading-snug">Chinese Massage</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+                    <i class="fa fa-hand-paper-o"></i>
+          
+          <span class="font-semibold text-gray-800 leading-snug">Modern Massage</span>
+        </button>
+
+        <button class="flex items-center gap-3 rounded-xl border border-gray-300 bg-white py-4 px-4 text-left hover:shadow-sm transition">
+                   <i class="fa fa-hand-paper-o"></i>
+     
+          <span class="font-semibold text-gray-800 leading-snug">Physiotherapy</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Poster -->
+    <div class="px-6 mt-8 pb-24">
+      <img src="https://img2.pic.in.th/pic/thaimassage-cmu2567.jpeg" alt="บริการศูนย์นวดไทย มช."
+           class="w-full rounded-xl shadow object-cover">
+    </div>
+
+  </div>
+</div>
+
+
+
+<!-- Learning Screen -->
+<div id="learning" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Header -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Learning</h1>
+    </div>
+
+    <!-- Search -->
+    <div class="px-6 mt-4">
+      <div class="relative">
+        <input type="text" placeholder="Search  for courses or workshops"
+               class="w-full bg-gray-100 rounded-2xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-blue"/>
+        <i class="fa fa-search absolute left-3 top-3.5 text-gray-400"></i>
+      </div>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="px-6 mt-4 flex gap-2">
+      <button id="tab-overview" class="tabL-btn px-4 py-2 rounded-full text-sm font-semibold bg-sky-blue text-white"
+              onclick="switchLearningTab('overview')">Overview</button>
+      <button id="tab-courses" class="tabL-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-700"
+              onclick="switchLearningTab('courses')">Courses</button>
+      <button id="tab-videos" class="tabL-btn px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 text-gray-700"
+              onclick="switchLearningTab('videos')">Videos</button>
+    </div>
+
+    <!-- ====== OVERVIEW ====== -->
+    <div id="learning-overview" class="px-6 mt-5 space-y-6">
+      <!-- Featured -->
+      <section>
+        <h3 class="font-extrabold text-gray-900 mb-3">Featured Courses</h3>
+
+        <div class="rounded-2xl bg-gray-50 p-3 mb-3">
+          <img class="w-full rounded-lg"
+               src="https://www.lifelong.cmu.ac.th/assets/images/logo/logo.png?random=d32fbbb14cdaec4ca20f79892c030dcf"
+               alt="Lifelong" />
+          <div class="mt-3">
+            <div class="font-extrabold">Lifelong Education</div>
+            <p class="text-sm text-gray-600 mt-1">
+              A public learning space that promotes non-formal and informal education.
+              It offers diverse learning formats, providing accessible and easy-to-digest
+              knowledge for learners of all ages
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-2xl bg-gray-50 p-3">
+          <img class="w-full rounded-lg"
+               src="https://www.lifelong.cmu.ac.th/medee/assets/images/banner/banner.jpg"
+               alt="Mee-Dee" />
+          <div class="mt-3">
+            <div class="font-extrabold">Mee-Dee</div>
+            <p class="text-sm text-gray-600 mt-1">
+              MEDEE: Multi-generation Entrepreneur Development Educational Ecosystem
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- My Learning Path -->
+      <section>
+        <h3 class="font-extrabold text-gray-900 mb-3">My Learning Path</h3>
+
+        <div class="flex items-center gap-3">
+          <div class="flex-1">
+            <div class="font-semibold">Survival Chinese</div>
+            <div class="text-xs text-gray-500">In progress</div>
+          </div>
+          <img src="https://www.lifelong.cmu.ac.th/video/assets/files/project/project-pictureshow/pic-963c785874b4fcff99997f62f7d41699.jpg"
+               class="w-28 h-16 object-cover rounded-lg" alt="thumb"/>
+        </div>
+
+        <div class="mt-3">
+          <div class="text-xs text-gray-500 mb-1">50% complete</div>
+          <div class="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+            <div class="h-full bg-sky-blue" style="width:50%"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CMU Lifelong Learning -->
+      <section class="pb-6">
+        <h3 class="font-extrabold text-gray-900 mb-3">CMU Lifelong Learning</h3>
+
+        <div class="rounded-2xl bg-gray-50 p-3 mb-3 flex items-center gap-3">
+          <div class="flex-1">
+            <div class="font-semibold">Lifelong Learning Centre</div>
+            <p class="text-sm text-gray-600">Explore courses and resources</p>
+            <button class="mt-2 px-3 py-1.5 rounded-lg bg-gray-200 text-gray-800 text-sm">Visit</button>
+          </div>
+          <img class="w-28 h-16 object-contain rounded-lg"
+               src="https://www.lifelong.cmu.ac.th/assets/images/logo/logo.png?random=d32fbbb14cdaec4ca20f79892c030dcf"
+               alt="LLC"/>
+        </div>
+
+        <div class="rounded-2xl bg-gray-50 p-3 flex items-center gap-3">
+          <div class="flex-1">
+            <div class="font-semibold">Medee Project</div>
+            <p class="text-sm text-gray-600">Discover specialized programs</p>
+            <button class="mt-2 px-3 py-1.5 rounded-lg bg-gray-200 text-gray-800 text-sm">Learn More</button>
+          </div>
+          <img class="w-20 h-20 object-cover rounded-lg"
+               src="https://www.lifelong.cmu.ac.th/medee/assets/images/logo/logo2.png"
+               alt="Medee"/>
+        </div>
+ <div class="h-[96px]"></div>
+
+      </section>
+    </div>
+
+<!-- ====== COURSES GRID (4 CARDS) ====== -->
+<div id="learning-courses" class="hidden px-5 mt-5">
+  <div class="grid grid-cols-1 gap-4 pb-6">
+
+    <!-- Card 1: Free -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <img class="h-28 w-full object-cover"
+           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6wwWApcBn4SAn42YaTjdNED24D6ECoUZNhw&s" alt="Sign Language">
+      <div class="p-3">
+        <div class="font-extrabold text-[14px] leading-snug">
+          ภาษามือเบื้องต้น (INTRODUCTION TO SIGN LANGUAGE)
+        </div>
+
+        <div class="mt-2 flex items-center gap-1 text-[12px]">
+          <i class="fa fa-money text-green-600"></i>
+          <span class="text-green-600 font-semibold">ไม่มีค่าใช้จ่าย</span>
+        </div>
+
+        <div class="border-t mt-3 mb-2"></div>
+        <div class="flex items-center justify-between text-gray-700">
+          <div class="flex items-center gap-2 text-[12px] font-medium">
+            <i class="fa fa-laptop"></i> เรียนออนไลน์
+          </div>
+          <button class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+            <i class="fa fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Paid + ring สีม่วงอ่อนไล่ตามตัวอย่าง -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden ring-1 ring-violet-200">
+      <img class="h-28 w-full object-cover"
+           src="https://www.lifelong.cmu.ac.th/video/assets/files/project/project-pictureshow/pic-fe81a108b3808eab06a1541ff164d970.jpg" alt="STEM">
+      <div class="p-3">
+        <div class="font-extrabold text-[14px] leading-snug">
+          ขับเคลื่อนการเปลี่ยนแปลงและนวัตกรรมด้วยสะเต็มศึกษา (Driving STEM)
+        </div>
+
+        <div class="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-[12px]">
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            24 ก.พ. 2568 – 1 เม.ย. 2570
+          </div>
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            <i class="fa fa-graduation-cap"></i> สะสมหน่วยกิต
+          </div>
+          <div class="flex items-center gap-1 text-emerald-600 font-semibold col-span-2">
+            <i class="fa fa-money"></i> ราคา 3,000 บาท
+          </div>
+        </div>
+
+        <div class="border-t mt-3 mb-2"></div>
+        <div class="flex items-center justify-between text-gray-700">
+          <div class="flex items-center gap-2 text-[12px] font-medium">
+            <i class="fa fa-laptop"></i> เรียนออนไลน์
+          </div>
+          <button class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+            <i class="fa fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3: งานท่องเที่ยว (ฟรี + ใบรับรอง) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <img class="h-28 w-full object-cover"
+           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWsGxrludfvFGs8QcMkFcX1tehvEv738HtRQ&s" alt="INNO4Tourism">
+      <div class="p-3">
+        <div class="font-extrabold text-[14px] leading-snug">
+          INNO4Tourism – เทคโนโลยีสารสนเทศและการสื่อสาร สำหรับธุรกิจการท่องเที่ยวและเศรษฐกิจ
+        </div>
+
+        <div class="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-[12px]">
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            1 ก.ค. 2568 – 31 ส.ค. 2568
+          </div>
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            <i class="fa fa-graduation-cap"></i> รับรองผลอบรม
+          </div>
+          <div class="flex items-center gap-1 text-emerald-600 font-semibold col-span-2">
+            <i class="fa fa-money"></i> ไม่มีค่าใช้จ่าย
+          </div>
+        </div>
+
+        <div class="border-t mt-3 mb-2"></div>
+        <div class="flex items-center justify-between text-gray-700">
+          <div class="flex items-center gap-2 text-[12px] font-medium">
+            <i class="fa fa-laptop"></i> เรียนทั้งออนไลน์/ในสถานศึกษา
+          </div>
+          <button class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+            <i class="fa fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4: Survival Chinese (ฟรี) -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <img class="h-28 w-full object-cover"
+           src="https://www.lifelong.cmu.ac.th/video/assets/files/project/project-pictureshow/pic-963c785874b4fcff99997f62f7d41699.jpg" alt="Chinese">
+      <div class="p-3">
+        <div class="font-extrabold text-[14px] leading-snug">
+          ภาษาจีนในชีวิตประจำวัน (Survival Chinese)
+        </div>
+
+        <div class="mt-2 grid grid-cols-2 gap-x-2 gap-y-1 text-[12px]">
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            13 ส.ค. 2567 – 31 ธ.ค. 2568
+          </div>
+          <div class="flex items-center gap-1 text-gray-600 col-span-2">
+            <i class="fa fa-globe"></i> ภาษาไทย
+          </div>
+          <div class="flex items-center gap-1 text-emerald-600 font-semibold col-span-2">
+            <i class="fa fa-money"></i> ไม่มีค่าใช้จ่าย
+          </div>
+        </div>
+
+        <div class="border-t mt-3 mb-2"></div>
+        <div class="flex items-center justify-between text-gray-700">
+          <div class="flex items-center gap-2 text-[12px] font-medium">
+            <i class="fa fa-laptop"></i> เรียนออนไลน์
+          </div>
+          <button class="w-9 h-9 flex items-center justify-center rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200">
+            <i class="fa fa-angle-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- กันแท็บล่างทับ -->
+  <div class="h-[96px]"></div>
+</div>
+
+
+
+    <!-- ====== VIDEOS LIST ====== -->
+    <div id="learning-videos" class="hidden px-6 mt-5 space-y-6 pb-6">
+      <!-- group -->
+      <div>
+        <div class="font-extrabold text-gray-900 mb-3">
+          ห้องเรียนครูอ้อยโรงเรียนผู้สูงอายุ
+        </div>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <img class="w-40 h-24 rounded-lg object-cover"
+                 src="https://i.ytimg.com/vi/CSND8wK4kzk/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-DoACuAiKAgwIABABGGUgUShXMA8=&rs=AOn4CLCQEM0kcLeqAlw75h3fMMOcALFKlg&quot.png" alt="">
+            <div class="flex-1">
+              <div class="font-semibold">Part 1. iPhone Basics</div>
+              <div class="text-xs text-gray-500 mt-1">MEDEE 01 Teaching Seniors IT Skills</div>
+              <button class="mt-2 text-sm text-sky-blue font-semibold">Watch</button>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-3">
+            <img class="w-40 h-24 rounded-lg object-cover"
+                 src="https://i.ytimg.com/vi/CSND8wK4kzk/sddefault.jpg?sqp=-oaymwEmCIAFEOAD8quKqQMa8AEB-AH-DoACuAiKAgwIABABGGUgUShXMA8=&rs=AOn4CLCQEM0kcLeqAlw75h3fMMOcALFKlg&quot" alt="">
+            <div class="flex-1">
+              <div class="font-semibold">Part 2. Android Mobile Basics</div>
+              <div class="text-xs text-gray-500 mt-1">MEDEE 01 Teaching Seniors IT Skills</div>
+              <button class="mt-2 text-sm text-sky-blue font-semibold">Watch</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="font-extrabold text-gray-900 mb-3">MEDEE 08 Basic Accounting</div>
+        <div class="flex items-start gap-3">
+          <img class="w-40 h-24 rounded-lg object-cover"
+               src="https://learning.mooc.cmu.ac.th/courses/93/files/5462/download?verifier=IcjXN4BGKOteTIlU6k6AxBJPDE2WS6OG3Zb7Cvxb" alt="">
+          <div class="flex-1">
+            <div class="font-semibold">เข้าใจบัญชีเบื้องต้น</div>
+            <div class="text-xs text-gray-500 mt-1">เรียนออนไลน์ฟรี</div>
+            <button class="mt-2 text-sm text-sky-blue font-semibold">Watch</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="h-[96px]"></div>
+    </div>
+
+  </div>
+</div>
+
+
+       <!-- Jobs Screen -->
+<div id="jobs" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Header -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Job</h1>
+    </div>
+
+    <!-- Search -->
+    <div class="px-6 mt-6">
+      <div class="relative">
+        <input type="text" placeholder="Search for jobs"
+          class="w-full bg-gray-100 rounded-2xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-sky-blue" />
+        <i class="fa fa-search absolute left-3 top-3.5 text-gray-400"></i>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="px-6 mt-4 flex space-x-3">
+      <button class="px-4 py-2 rounded-full text-sm font-medium bg-gray-200 text-gray-800">All</button>
+      <button class="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600">Part-time</button>
+      <button class="px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-600">Full-time</button>
+    </div>
+
+    <!-- Job list -->
+    <div class="px-6 mt-6 space-y-5">
+      <!-- Job Item -->
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-extrabold text-gray-900">Financial Consultant</div>
+          <div class="text-xs text-gray-500">Certificate | LIVELONG CMU</div>
+        </div>
+        <button class="bg-sky-blue text-white px-4 py-1.5 rounded-xl text-sm font-semibold hover:brightness-95">Apply</button>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-extrabold text-gray-900">Handicrafts / DIY</div>
+          <div class="text-xs text-gray-500">Certificate | LIVELONG CMU</div>
+        </div>
+        <button class="bg-sky-blue text-white px-4 py-1.5 rounded-xl text-sm font-semibold hover:brightness-95">Apply</button>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="font-extrabold text-gray-900">Vegetable Selling produce</div>
+          <div class="text-xs text-gray-500">Certificate | LIVELONG CMU</div>
+        </div>
+        <button class="bg-sky-blue text-white px-4 py-1.5 rounded-xl text-sm font-semibold hover:brightness-95">Apply</button>
+      </div>
+    </div>
+
+    <!-- Spacer กันแท็บล่าง -->
+    <div class="mt-auto h-[96px]"></div>
+  </div>
+</div>
+
+
+       <!-- Profile Screen -->
+<div id="profile" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Top bar -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Profile</h1>
+    </div>
+
+    <!-- Header with avatar -->
+    <div class="mt-3 bg-sky-blue px-6 pb-6 pt-8">
+      <div class="w-28 h-28 rounded-full overflow-hidden border-4 border-white mx-auto">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/028/144/389/small_2x/happy-asian-old-woman-isolated-free-photo.jpg" class="w-full h-full object-cover" alt="avatar">
+      </div>
+      <div class="text-center mt-4">
+        <div class="text-xl font-extrabold text-gray-900">Clara Bennett</div>
+        <div class="text-sm text-gray-800/80">68 years old</div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="px-5 py-4 space-y-6">
+
+      <!-- Contact -->
+      <section>
+        <h3 class="font-extrabold text-gray-900 mb-3">Contact</h3>
+
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- phone icon -->
+            <i class="fa fa-phone" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800">Phone</div>
+            <div class="text-sm text-gray-500">+1 (555) 123-4567</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- mail icon -->
+         <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800">Email</div>
+            <div class="text-sm text-gray-500">clara.bennett@email.com</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Emergency Contact -->
+      <section>
+        <h3 class="font-extrabold text-gray-900 mb-3">Emergency Contact</h3>
+
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- user icon -->
+            <i class="fa fa-user-o" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800">Name</div>
+            <div class="text-sm text-gray-500">Ethan Bennett</div>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- phone icon -->
+              <i class="fa fa-phone" aria-hidden="true"></i>
+
+          </div>
+          <div>
+            <div class="font-semibold text-gray-800">Phone</div>
+            <div class="text-sm text-gray-500">+1 (555) 987-6543</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section>
+        <h3 class="font-extrabold text-gray-900 mb-3">Settings</h3>
+
+        <button class="w-full flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- edit icon -->
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+          </div>
+          <div class="text-left">
+            <div class="font-semibold text-gray-800">Edit Profile</div>
+          </div>
+        </button>
+
+        <button class="w-full flex items-center gap-3 py-3">
+          <div class="w-12 h-12 rounded-xl bg-gray-100 flex items-center justify-center">
+            <!-- help icon -->
+           <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+          </div>
+          <div class="text-left">
+            <div class="font-semibold text-gray-800">Help &amp; Support</div>
+          </div>
+        </button>
+      </section>
+
+<!-- Sign out (sticky above bottom tab) -->
+<div class=" px-5 pt-3 pb-2 bg-white/80 backdrop-blur-md">
+  <button 
+    onclick="showScreen('welcome')" 
+    class="w-full py-3.5 rounded-xl bg-red-50 border border-red-200 text-lg font-extrabold text-red-600 hover:bg-red-100 transition">
+    Sign Out
+  </button>
+</div>
+
+<!-- spacer กันแท็บล่าง -->
+<div class="h-[70px]"></div>
+    </div>
+
+
+  </div>
+</div>
+
+
+       <!-- Settings Screen -->
+<div id="settings" class="screen bg-white content-with-tab">
+  <div class="flex flex-col min-h-full">
+
+    <!-- Header -->
+    <div class="px-4 pt-4 relative">
+      <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+      <h1 class="text-center text-3xl font-extrabold text-gray-900">Setting</h1>
+    </div>
+
+    <!-- Buttons -->
+    <div class="px-6 mt-6 space-y-4">
+      <button
+        onclick="showScreen('subscription')"
+        class="w-full bg-accent-yellow text-gray-900 font-extrabold text-lg py-4 rounded-2xl shadow-sm hover:brightness-95 transition">
+        New Subscription
+      </button>
+
+      <button
+        onclick="showScreen('security')"
+        class="w-full bg-accent-yellow text-gray-900 font-extrabold text-lg py-4 rounded-2xl shadow-sm hover:brightness-95 transition">
+        Security
+      </button>
+
+      <button
+        onclick="showScreen('language')"
+        class="w-full bg-accent-yellow text-gray-900 font-extrabold text-lg py-4 rounded-2xl shadow-sm hover:brightness-95 transition">
+        Setting language
+      </button>
+    </div>
+
+    <!-- กันแท็บล่างทับ -->
+    <div class="mt-auto h-[96px]"></div>
+  </div>
+</div>
+
+
+        <!-- Notifications Screen -->
+        <div id="notifications" class="screen bg-gray-50">
+            <div class="p-6 pb-24">
+                <div class="px-4 pt-4 relative">
+
+                    <button onclick="showScreen('home')" class="absolute left-4 top-4 text-2xl text-gray-700">←</button>
+   <h1 class="text-center text-3xl font-extrabold text-gray-900">Notifications</h1>
+
+
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="bg-white rounded-2xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-3 h-3 bg-sky-blue rounded-full mt-2 mr-4"></div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Medication Reminder</h3>
+                                <p class="text-gray-600 mb-2">Don't forget to take your morning medication</p>
+                                <p class="text-sm text-gray-500">2 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-3 h-3 bg-green-500 rounded-full mt-2 mr-4"></div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Health Data Synced</h3>
+                                <p class="text-gray-600 mb-2">Your smartwatch data has been updated</p>
+                                <p class="text-sm text-gray-500">5 hours ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-3 h-3 bg-accent-yellow rounded-full mt-2 mr-4"></div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">Appointment Reminder</h3>
+                                <p class="text-gray-600 mb-2">Doctor appointment tomorrow at 2:00 PM</p>
+                                <p class="text-sm text-gray-500">1 day ago</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-2xl p-6">
+                        <div class="flex items-start">
+                            <div class="w-3 h-3 bg-purple-500 rounded-full mt-2 mr-4"></div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-semibold text-gray-800 mb-2">New Course Available</h3>
+                                <p class="text-gray-600 mb-2">Check out the new digital skills course</p>
+                                <p class="text-sm text-gray-500">2 days ago</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Bottom Tab Bar -->
+<div class="tab-bar">
+  <div class="flex justify-around text-white">
+    <button class="tab-item active flex flex-col items-center" data-tab="home" onclick="showScreen('home')">
+      <div class="icon-wrapper"><i class="fa fa-home" aria-hidden="true"></i></div>
+      <span class="text-xs mt-1">Home</span>
+    </button>
+
+    <button class="tab-item flex flex-col items-center" data-tab="jobs" onclick="showScreen('jobs')">
+      <div class="icon-wrapper"><i class="fa fa-briefcase text-xl"></i></div>
+      <span class="text-xs mt-1">Jobs</span>
+    </button>
+
+    <button class="tab-item flex flex-col items-center" data-tab="learning" onclick="showScreen('learning')">
+      <div class="icon-wrapper"><i class="fa fa-globe text-xl"></i></div>
+      <span class="text-xs mt-1">Learning</span>
+    </button>
+
+    <button class="tab-item flex flex-col items-center" data-tab="healthcare" onclick="showScreen('healthcare')">
+      <div class="icon-wrapper"><i class="fa fa-plus text-xl"></i></div>
+      <span class="text-xs mt-1">Healthcare</span>
+    </button>
+
+    <button class="tab-item flex flex-col items-center" data-tab="services" onclick="showScreen('services')">
+      <div class="icon-wrapper"><i class="fa fa-heart text-xl"></i></div>
+      <span class="text-xs mt-1">Service</span>
+    </button>
+  </div>
+</div>
+
+
+<script>
+  function switchLearningTab(tab){
+    const tabs = ['overview','courses','videos'];
+
+    // แสดง/ซ่อนคอนเทนต์
+    tabs.forEach(t=>{
+      document.getElementById(`learning-${t}`).classList.toggle('hidden', t!==tab);
+    });
+
+    // ปรับปุ่ม active
+    document.querySelectorAll('.tabL-btn').forEach(btn=>{
+      btn.classList.remove('bg-sky-blue','text-white');
+      btn.classList.add('bg-gray-100','text-gray-700');
+    });
+    const activeBtn = document.getElementById(`tab-${tab}`);
+    activeBtn.classList.remove('bg-gray-100','text-gray-700');
+    activeBtn.classList.add('bg-sky-blue','text-white');
+  }
+
+  // เริ่มต้นที่ Overview
+  // (ถ้าคุณเรียก showScreen('learning') จากที่อื่น แท็บจะอยู่ที่ overview โดยค่าเริ่ม)
+  switchLearningTab('overview');
+</script>
+<script>
+  // หน้าไหนที่ไม่มีแท็บล่าง
+  const HIDE_TAB_ON = ['welcome','login','signup','verification'];
+
+  function setActiveTab(screenId){
+    // มีแท็บเฉพาะ 5 หน้านี้
+    const tabNames = ['home','jobs','learning','healthcare','services'];
+    // เคลียร์ active
+    document.querySelectorAll('.tab-item').forEach(btn => btn.classList.remove('active'));
+    // ใส่ active เฉพาะเมื่อเป็นหนึ่งในแท็บ
+    if (tabNames.includes(screenId)) {
+      const btn = document.querySelector(`.tab-item[data-tab="${screenId}"]`);
+      if (btn) btn.classList.add('active');
+    }
+  }
+
+  function showScreen(screenId) {
+    // ซ่อน/แสดงหน้าจอ
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    const target = document.getElementById(screenId);
+    if (target) target.classList.add('active');
+
+    // ซ่อน/แสดงแท็บล่าง
+    const tabBar = document.querySelector('.tab-bar');
+    tabBar.style.display = HIDE_TAB_ON.includes(screenId) ? 'none' : 'block';
+
+    // อัปเดตแท็บ active ให้ตรงกับหน้า
+    setActiveTab(screenId);
+  }
+
+  // เริ่มที่หน้า welcome (จะซ่อนแท็บให้อัตโนมัติ)
+  showScreen('welcome');
+</script><script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9717b669b04b7335',t:'MTc1NTU4NjE4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
